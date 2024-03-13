@@ -83,3 +83,53 @@
               ("TAB" . 'copilot-accept-completion)
               ("C-TAB" . 'copilot-accept-completion-by-word)
               ("C-<tab>" . 'copilot-accept-completion-by-word)))
+
+
+;; HELPER FUNCTIONS FOR KEYBINDINGS
+;; ISSUES: Does open as a smaller height
+;;         Does not open in the center of all windows, if there are more than 1 window
+;; Opens shell at the bottom with height of 1/3 of the window
+;; If it exists, it just switches to the window
+;; If it exists but is not focused, it switches to it
+;; If it exists but is not visible, it opens it at the bottom
+;; If it exists and is focused, it closes it
+(defun open-shell-bottom ()
+        (interactive)
+        (let ((shell-window (get-buffer-window "*shell*")))
+        (if shell-window
+                (if (eq (selected-window) shell-window)
+                (delete-window shell-window)
+                (select-window shell-window))
+        (split-window-below)
+        (other-window 1)
+        (shell))))
+
+;; Opens new file at the right
+;; ISSUES: Opens a new window even if there is a window on the right
+;;         Splits before opening the file
+;; If there is no window on the right, opens a window and opens the file in it
+;; If there already is a window on the right, it switches to it and opens the new file without splitting
+(defun open-file-right ()
+        (interactive)
+        (let ((file-window (get-buffer-window "*scratch*")))
+        (if file-window
+                (if (eq (selected-window) file-window)
+                (delete-window file-window)
+                (select-window file-window))
+        (split-window-right)
+        (other-window 1)
+        (find-file (read-file-name "File: ")))))
+
+;; Opens new file at the left
+;; If there is no window, opens a window and opens the file in it
+;; If there is a window on the left, it switches to it and opens the new file without splitting
+(defun open-file-left ())
+
+
+;; KEYBINDINGS
+;; Keybindings open shell at bottom and files at right and left
+(map! :leader
+      (:prefix "f"
+       :desc  "open shell bottom" "<down>" #'open-shell-bottom
+       :desc  "open file right" "<right>" #'open-file-right
+       :desc  "open file left" "<left>" #'open-file-left))

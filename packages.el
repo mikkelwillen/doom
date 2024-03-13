@@ -49,7 +49,12 @@
 ;; ...Or *all* packages (NOT RECOMMENDED; will likely break things)
 ;; (unpin! t)
 
+;; pdf tools package
 (package! pdf-tools)
 
+;; tablist package
+(package! tablist)
+
+;; copilot package
 (package! copilot
   :recipe (:host github :repo "copilot-emacs/copilot.el" :files ("*.el" "dist")))
