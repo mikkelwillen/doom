@@ -42,6 +42,8 @@
 ;; change `org-directory'. It must be set before org loads!
 (setq org-directory "~/org/")
 
+;; Change the undo limit to 80MB
+(setq undo-limit 80000000)
 
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
 ;; `after!' block, otherwise Doom's defaults may override your settings. E.g.
@@ -86,8 +88,6 @@
 
 
 ;; HELPER FUNCTIONS FOR KEYBINDINGS
-;; ISSUES: Does open as a smaller height
-;;         Does not open in the center of all windows, if there are more than 1 window
 ;; Opens shell at the bottom with height of 1/3 of the window
 ;; If it exists, it just switches to the window
 ;; If it exists but is not focused, it switches to it
@@ -102,29 +102,46 @@
                 (select-window shell-window))
         (split-window-below)
         (other-window 1)
+        (evil-window-move-very-bottom)
+        (evil-window-set-height (round (* 0.6 (window-total-height))))
         (shell))))
 
 ;; Opens new file at the right
-;; ISSUES: Opens a new window even if there is a window on the right
-;;         Splits before opening the file
+;; Opens the dialog to open the file, and then splits the window to the right and opens the file in the new window
+;; If no file is selected, it does nothing
 ;; If there is no window on the right, opens a window and opens the file in it
 ;; If there already is a window on the right, it switches to it and opens the new file without splitting
 (defun open-file-right ()
         (interactive)
-        (let ((file-window (get-buffer-window "*scratch*")))
-        (if file-window
-                (if (eq (selected-window) file-window)
-                (delete-window file-window)
-                (select-window file-window))
-        (split-window-right)
-        (other-window 1)
-        (find-file (read-file-name "File: ")))))
+        (if (one-window-p)
+                (progn
+                  (find-file (read-file-name "Open file: "))
+                  (split-window-right)
+                  (evil-switch-to-windows-last-buffer)
+                  (other-window 1))
+                 (if (windmove-find-other-window 'right)
+                        (progn
+                          (other-window 1)
+                          (find-file (read-file-name "Open file: ")))
+                        (find-file (read-file-name "Open file: ")))))
 
 ;; Opens new file at the left
 ;; If there is no window, opens a window and opens the file in it
 ;; If there is a window on the left, it switches to it and opens the new file without splitting
-(defun open-file-left ())
-
+(defun open-file-left ()
+        (interactive)
+        (if (one-window-p)
+                (progn
+                  (find-file (read-file-name "Open file: "))
+                  (split-window-right)
+                  (evil-switch-to-windows-last-buffer)
+                  (other-window 1)
+                  (evil-window-move-far-left))
+                (if (windmove-find-other-window 'left)
+                        (progn
+                          (other-window 1)
+                          (find-file (read-file-name "Open file: ")))
+                        (find-file (read-file-name "Open file: ")))))
 
 ;; KEYBINDINGS
 ;; Keybindings open shell at bottom and files at right and left
