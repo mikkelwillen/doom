@@ -89,6 +89,20 @@
               ("C-TAB" . 'copilot-accept-completion-by-word)
               ("C-<tab>" . 'copilot-accept-completion-by-word)))
 
+;; Markdown preview
+(defun +markdown-live-preview-window-xwidget-webkit (file)
+  "Preview FILE with xwidget-webkit.
+To be used with `markdown-live-preview-window-function'."
+  (let ((uri (format "file://%s" file)))
+      (xwidget-webkit-browse-url uri)
+      xwidget-webkit-last-session-buffer))
+
+(set-popup-rule! "^\\*xwidget" :side 'right :size .50 :ttl 0 :quit nil)
+
+(setq markdown-live-preview-window-function
+      'markdown-live-preview-window-xwidget-webkit)
+
+
 
 ;; HELPER FUNCTIONS FOR KEYBINDINGS
 ;; Opens shell at the bottom with height of 1/3 of the window
