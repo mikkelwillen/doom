@@ -192,7 +192,10 @@
        :config
        ;;literate
        (default +bindings +smartparens))
-       (add-to-list 'initial-frame-alist '(fullscreen . maximized))
 
-       (add-load-path! ".")
-       (require 'fasto-mode)
+(add-to-list 'initial-frame-alist '(fullscreen . maximized))
+
+(add-load-path! ".")
+(require 'fasto-mode)
+
+(add-hook 'prog-mode-hook 'display-line-numbers-mode)

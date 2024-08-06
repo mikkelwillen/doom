@@ -55,6 +55,8 @@
 ;; tablist package
 (package! tablist)
 
+(package! exec-path-from-shell)
+
 ;; copilot package
-((package! copilot
-  :recipe (:host github :repo "copilot-emacs/copilot.el" :files ("*.el")))
+(package! copilot
+   :recipe (:host github :repo "copilot-emacs/copilot.el" :files ("*.el")))

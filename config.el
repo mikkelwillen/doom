@@ -34,9 +34,8 @@
 ;; `load-theme' function. This is the default:
 (setq doom-theme 'doom-one)
 
-;; This determines the style of line numbers in effect. If set to `nil', line
-;; numbers are disabled. For relative line numbers, set this to `relative'.
-(setq display-line-numbers-type t)
+;; Display line numbers
+(global-display-line-numbers-mode 1)
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
@@ -46,7 +45,7 @@
 (setq undo-limit 80000000)
 
 ;; Set the font size
-(setq doom-font (font-spec :size 16))
+(setq doom-font (font-spec :size 18))
 
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
 ;; `after!' block, otherwise Doom's defaults may override your settings. E.g.
@@ -87,7 +86,16 @@
               ("<tab>" . 'copilot-accept-completion)
               ("TAB" . 'copilot-accept-completion)
               ("C-TAB" . 'copilot-accept-completion-by-word)
-              ("C-<tab>" . 'copilot-accept-completion-by-word)))
+              ("C-<tab>" . 'copilot-accept-completion-by-word)
+              ("C-n" . 'copilot-next-completion)
+              ("C-p" . 'copilot-previous-completion))
+
+  :config
+  (add-to-list 'copilot-indentation-alist '(prog-mode 4))
+  (add-to-list 'copilot-indentation-alist '(org-mode 4))
+  (add-to-list 'copilot-indentation-alist '(text-mode 4))
+  (add-to-list 'copilot-indentation-alist '(closure-mode 4))
+  (add-to-list 'copilot-indentation-alist '(emacs-lisp-mode 4)))
 
 ;; Markdown preview
 (defun +markdown-live-preview-window-xwidget-webkit (file)
