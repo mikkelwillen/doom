@@ -45,7 +45,7 @@
 (setq undo-limit 80000000)
 
 ;; Set the font size
-(setq doom-font (font-spec :size 18))
+(setq doom-font (font-spec :size 20 ))
 
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
 ;; `after!' block, otherwise Doom's defaults may override your settings. E.g.
@@ -110,8 +110,7 @@ To be used with `markdown-live-preview-window-function'."
 (setq markdown-live-preview-window-function
       'markdown-live-preview-window-xwidget-webkit)
 
-
-
+;; FIX!!
 ;; HELPER FUNCTIONS FOR KEYBINDINGS
 ;; Opens shell at the bottom with height of 1/3 of the window
 ;; If it exists, it just switches to the window
