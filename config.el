@@ -5,6 +5,13 @@
 ;; `load-theme' function. This is the default:
 (setq doom-theme 'doom-one)
 
+;; Redefine display-line-numbers to not show line numbers in pdf-view-mode
+(require 'display-line-numbers)
+  (defun display-line-numbers--turn-on ()
+    "Turn on `display-line-numbers-mode'."
+    (unless (or (minibufferp) (eq major-mode 'pdf-view-mode))
+      (display-line-numbers-mode)))
+
 ;; Display line numbers
 (global-display-line-numbers-mode 1)
 
@@ -17,6 +24,9 @@
 
 ;; Set the font size
 (setq doom-font (font-spec :size 20 ))
+
+;; Set indentation to 4 spaces
+(setq-default tab-width 4)
 
 ;; accept completion from copilot and fallback to company
 (use-package! copilot
@@ -36,20 +46,8 @@
   (add-to-list 'copilot-indentation-alist '(closure-mode 4))
   (add-to-list 'copilot-indentation-alist '(emacs-lisp-mode 4)))
 
-;; Markdown preview
-(defun +markdown-live-preview-window-xwidget-webkit (file)
-  "Preview FILE with xwidget-webkit.
-To be used with `markdown-live-preview-window-function'."
-  (let ((uri (format "file://%s" file)))
-      (xwidget-webkit-browse-url uri)
-      xwidget-webkit-last-session-buffer))
 
-(set-popup-rule! "^\\*xwidget" :side 'right :size .50 :ttl 0 :quit nil)
-
-(setq markdown-live-preview-window-function
-      'markdown-live-preview-window-xwidget-webkit)
-
-;; FIX!!
+;; TODO FIX!!
 ;; HELPER FUNCTIONS FOR KEYBINDINGS
 ;; Opens shell at the bottom with height of 1/3 of the window
 ;; If it exists, it just switches to the window
