@@ -26,25 +26,27 @@
 (setq doom-font (font-spec :size 20 ))
 
 ;; Set indentation to 4 spaces
+(setq-default indent-tabs-mode nil)
 (setq-default tab-width 4)
+(setq indent-line-function 'insert-tab)
 
 ;; accept completion from copilot and fallback to company
 (use-package! copilot
-  :hook (prog-mode . copilot-mode)
-  :bind (:map copilot-completion-map
-              ("<tab>" . 'copilot-accept-completion)
-              ("TAB" . 'copilot-accept-completion)
-              ("C-TAB" . 'copilot-accept-completion-by-word)
-              ("C-<tab>" . 'copilot-accept-completion-by-word)
-              ("C-n" . 'copilot-next-completion)
-              ("C-p" . 'copilot-previous-completion))
+    :hook (prog-mode . copilot-mode)
+    :bind (:map copilot-completion-map
+	("<tab>" . 'copilot-accept-completion)
+        ("TAB" . 'copilot-accept-completion)
+        ("C-TAB" . 'copilot-accept-completion-by-word)
+        ("C-<tab>" . 'copilot-accept-completion-by-word)
+        ("C-n" . 'copilot-next-completion)
+        ("C-p" . 'copilot-previous-completion))
 
-  :config
-  (add-to-list 'copilot-indentation-alist '(prog-mode 4))
-  (add-to-list 'copilot-indentation-alist '(org-mode 4))
-  (add-to-list 'copilot-indentation-alist '(text-mode 4))
-  (add-to-list 'copilot-indentation-alist '(closure-mode 4))
-  (add-to-list 'copilot-indentation-alist '(emacs-lisp-mode 4)))
+    :config
+    (add-to-list 'copilot-indentation-alist '(prog-mode 4))
+    (add-to-list 'copilot-indentation-alist '(org-mode 4))
+    (add-to-list 'copilot-indentation-alist '(text-mode 4))
+    (add-to-list 'copilot-indentation-alist '(closure-mode 4))
+    (add-to-list 'copilot-indentation-alist '(emacs-lisp-mode 4)))
 
 
 ;; TODO FIX!!
@@ -55,9 +57,9 @@
 ;; If it exists but is not visible, it opens it at the bottom
 ;; If it exists and is focused, it closes it
 (defun open-shell-bottom ()
-        (interactive)
-        (let ((shell-window (get-buffer-window "*shell*")))
-        (if shell-window
+    (interactive)
+    (let ((shell-window (get-buffer-window "*shell*")))
+    (if shell-window
                 (if (eq (selected-window) shell-window)
                 (delete-window shell-window)
                 (select-window shell-window))
@@ -66,6 +68,7 @@
         (evil-window-move-very-bottom)
         (evil-window-set-height (round (* 0.6 (window-total-height))))
         (shell))))
+
 
 ;; Opens new file at the right
 ;; Opens the dialog to open the file, and then splits the window to the right and opens the file in the new window
