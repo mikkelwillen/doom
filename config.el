@@ -7,10 +7,10 @@
 
 ;; Redefine display-line-numbers to not show line numbers in pdf-view-mode
 (require 'display-line-numbers)
-  (defun display-line-numbers--turn-on ()
+    (defun display-line-numbers--turn-on ()
     "Turn on `display-line-numbers-mode'."
     (unless (or (minibufferp) (eq major-mode 'pdf-view-mode))
-      (display-line-numbers-mode)))
+	(display-line-numbers-mode)))
 
 ;; Display line numbers
 (global-display-line-numbers-mode 1)
@@ -35,11 +35,11 @@
     :hook (prog-mode . copilot-mode)
     :bind (:map copilot-completion-map
 	("<tab>" . 'copilot-accept-completion)
-        ("TAB" . 'copilot-accept-completion)
-        ("C-TAB" . 'copilot-accept-completion-by-word)
-        ("C-<tab>" . 'copilot-accept-completion-by-word)
-        ("C-n" . 'copilot-next-completion)
-        ("C-p" . 'copilot-previous-completion))
+	("TAB" . 'copilot-accept-completion)
+	("C-TAB" . 'copilot-accept-completion-by-word)
+	("C-<tab>" . 'copilot-accept-completion-by-word)
+	("C-n" . 'copilot-next-completion)
+	("C-p" . 'copilot-previous-completion))
 
     :config
     (add-to-list 'copilot-indentation-alist '(prog-mode 4))
@@ -60,14 +60,14 @@
     (interactive)
     (let ((shell-window (get-buffer-window "*shell*")))
     (if shell-window
-                (if (eq (selected-window) shell-window)
-                (delete-window shell-window)
-                (select-window shell-window))
-        (split-window-below)
-        (other-window 1)
-        (evil-window-move-very-bottom)
-        (evil-window-set-height (round (* 0.6 (window-total-height))))
-        (shell))))
+		(if (eq (selected-window) shell-window)
+		(delete-window shell-window)
+		(select-window shell-window))
+	(split-window-below)
+	(other-window 1)
+	(evil-window-move-very-bottom)
+	(evil-window-set-height (round (* 0.6 (window-total-height))))
+	(shell))))
 
 
 ;; Opens new file at the right
@@ -76,36 +76,36 @@
 ;; If there is no window on the right, opens a window and opens the file in it
 ;; If there already is a window on the right, it switches to it and opens the new file without splitting
 (defun open-file-right ()
-        (interactive)
-        (if (one-window-p)
-                (progn
-                  (find-file (read-file-name "Open file: "))
-                  (split-window-right)
-                  (evil-switch-to-windows-last-buffer)
-                  (other-window 1))
-                 (if (windmove-find-other-window 'right)
-                        (progn
-                          (other-window 1)
-                          (find-file (read-file-name "Open file: ")))
-                        (find-file (read-file-name "Open file: ")))))
+	(interactive)
+	(if (one-window-p)
+		(progn
+		  (find-file (read-file-name "Open file: "))
+		  (split-window-right)
+		  (evil-switch-to-windows-last-buffer)
+		  (other-window 1))
+		 (if (windmove-find-other-window 'right)
+			(progn
+			  (other-window 1)
+			  (find-file (read-file-name "Open file: ")))
+			(find-file (read-file-name "Open file: ")))))
 
 ;; Opens new file at the left
 ;; If there is no window, opens a window and opens the file in it
 ;; If there is a window on the left, it switches to it and opens the new file without splitting
 (defun open-file-left ()
-        (interactive)
-        (if (one-window-p)
-                (progn
-                  (find-file (read-file-name "Open file: "))
-                  (split-window-right)
-                  (evil-switch-to-windows-last-buffer)
-                  (other-window 1)
-                  (evil-window-move-far-left))
-                (if (windmove-find-other-window 'left)
-                        (progn
-                          (other-window 1)
-                          (find-file (read-file-name "Open file: ")))
-                        (find-file (read-file-name "Open file: ")))))
+	(interactive)
+	(if (one-window-p)
+		(progn
+		  (find-file (read-file-name "Open file: "))
+		  (split-window-right)
+		  (evil-switch-to-windows-last-buffer)
+		  (other-window 1)
+		  (evil-window-move-far-left))
+		(if (windmove-find-other-window 'left)
+			(progn
+			  (other-window 1)
+			  (find-file (read-file-name "Open file: ")))
+			(find-file (read-file-name "Open file: ")))))
 
 ;; KEYBINDINGS
 ;; Keybindings open shell at bottom and files at right and left
