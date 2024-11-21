@@ -15,7 +15,6 @@
 (add-to-list 'package-archives
              '("melpa" . "https://melpa.org/packages/") t)
 
-
 ;; copilot package
 (package! copilot
    :recipe (:host github :repo "copilot-emacs/copilot.el" :files ("*.el")))
