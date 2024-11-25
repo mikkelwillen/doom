@@ -15,9 +15,6 @@
 ;; Display line numbers
 (global-display-line-numbers-mode 1)
 
-;; Truncate lines by default
-(setq-default global-visual-line-mode 1)
-
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
 (setq org-directory "~/org/")
@@ -29,7 +26,7 @@
 (setq doom-font (font-spec :size 24 ))
 
 ;; Set indentation to 4 spaces
-(setq-default indent-tabs-mode nil)
+(setq-default indent-tabs-mode t)
 (setq-default tab-width 4)
 (setq indent-line-function 'insert-tab)
 

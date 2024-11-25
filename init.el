@@ -127,7 +127,7 @@
        ;;hy                ; readability of scheme w/ speed of python
        ;;idris             ; a language you can depend on
        ;;json              ; At least it ain't XML
-       ;;(java +lsp)       ; the poster child for carpal tunnel syndrome
+       (java +lsp)       ; the poster child for carpal tunnel syndrome
        ;;javascript        ; all(hope(abandon(ye(who(enter(here))))))
        ;;julia             ; a better, faster MATLAB
        ;;kotlin            ; a better, slicker Java(Script)
@@ -178,6 +178,9 @@
        :config
        ;;literate
        (default +bindings +smartparens))
+
+;; Truncate lines by default
+(global-visual-line-mode t)
 
 ;; Make emacs open as fullscreen
 (add-to-list 'initial-frame-alist '(fullscreen . maximized))
