@@ -13,7 +13,7 @@
 	(display-line-numbers-mode)))
 
 ;; Display line numbers
-(global-display-line-numbers-mode 1)
+;; (global-display-line-numbers-mode 1)
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
@@ -107,6 +107,43 @@
 			  (find-file (read-file-name "Open file: ")))
 			(find-file (read-file-name "Open file: ")))))
 
+;; Switches to workspace by index
+;; If the workspace does not exist, it creates a new one at n+1
+;; 	where n is the index of the current greatest workspace
+;; If the workspace exists, it switches to it
+;; It also displays the workspace bar
+(defun switch-workspace-by-index (index)
+  "Switch to workspace by numeric INDEX, showing the workspace bar if necessary."
+  (interactive "nWorkspace index: ")
+  (let* ((workspaces (+workspace-list-names))
+         (target (nth (1- index) workspaces)))
+    (if target
+        (+workspace-switch target)
+      (+workspace/new )))
+  (+workspace/display))
+
+;; Customized backward-kill-word
+;; If the character behind the cursor is whitespace, it removes all whitespace
+;; If the character behind the cursor is a newline, it deletes the newline
+;; Otherwise, it removes a word
+(defun custom-backward-kill-word ()
+  (interactive)
+  (let ((char (char-before))) ; Get the character before the cursor
+    (cond
+     ;; Check for whitespace
+     ((and char (member char '(?\s ?\t)))
+      (while (and (char-before)
+                  (member (char-before) '(?\s ?\t)))
+        (delete-char -1)))
+     ;; Check for newline
+     ((and char (eq char ?\n))
+      (delete-char -1))
+     ;; Default case: kill the previous word
+     (t
+      (let ((start (point)))
+        (backward-word)
+        (kill-region (point) start))))))
+
 ;; KEYBINDINGS
 ;; Keybindings open shell at bottom and files at right and left
 (map! :leader
@@ -114,3 +151,14 @@
        :desc  "open shell bottom" "<down>" #'open-shell-bottom
        :desc  "open file right" "<right>" #'open-file-right
        :desc  "open file left" "<left>" #'open-file-left))
+
+;; Set M-1 to M-9 to switch to workspace by index or
+;; create a new one if it does not exist by calling
+;; my/switch-workspace-by-index
+(dotimes (i 10)
+  (global-set-key (kbd (format "M-%d" i))
+                  (lambda () (interactive) (switch-workspace-by-index i))))
+
+;; Set C-backspace to my custom backward-kill-word
+(map! :i "C-<backspace>" #'custom-backward-kill-word) ; In insert mode
+(map! :n "C-<backspace>" #'custom-backward-kill-word) ; In normal mode

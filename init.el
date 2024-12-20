@@ -154,7 +154,7 @@
        ;;scala             ; java, but good
        ;;(scheme +guile)   ; a fully conniving family of lisps
        sh                ; she sells {ba,z,fi}sh shells on the C xor
-       ;;sml
+       sml
        ;;solidity          ; do you need a blockchain? No.
        ;;swift             ; who asked for emoji variables?
        ;;terra             ; Earth and Moon in alignment for performance.
@@ -182,6 +182,9 @@
 ;; Truncate lines by default
 (global-visual-line-mode t)
 
+;; Always show line numbers and make them relative
+(setq display-line-numbers-type 'relative)
+
 ;; Make emacs open as fullscreen
 (add-to-list 'initial-frame-alist '(fullscreen . maximized))
 
@@ -197,3 +200,7 @@
 (add-to-list 'package-archives
              '("melpa-stable" . "https://stable.melpa.org/packages/"))
 (package-initialize)
+
+;; Enable eyebrowse
+(require 'eyebrowse)
+(eyebrowse-mode t)
