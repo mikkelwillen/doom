@@ -2,10 +2,10 @@
 ;;; $DOOMDIR/packages.el
 
 ;; pdf tools package
-(elpaca pdf-tools)
+(package! pdf-tools)
 
 ;; tablist package
-(elpaca tablist)
+(package! tablist)
 
 ;; Execution path
 (package! exec-path-from-shell)
