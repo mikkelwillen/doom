@@ -7,6 +7,9 @@
 ;; tablist package
 (package! tablist)
 
+;; Drag-stuff package to move lines and words
+(package! drag-stuff)
+
 ;; Execution path
 (package! exec-path-from-shell)
 (package-initialize)
